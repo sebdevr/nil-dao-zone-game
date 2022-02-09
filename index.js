@@ -54,7 +54,7 @@ client.on("ready", () => {
             await client.channels.cache.get(announcements).send({
                 embeds: [
                     new MessageEmbed()
-                        .setAuthor({ name: "The battle is over. The zone is under control, gods are with us. The braves will be rewarded 150 XP.\n\nCongrats:", iconURL: client.guilds.cache.get(guildID).iconURL({ dynamic: true }) })
+                        .setAuthor({ name: "The battle is over. The zone is under control, gods are with us. The braves will be rewarded 150 XP.\n\nCongrats:" })
                         .setDescription(winners)
                         .setColor("GREEN")
                         .setTimestamp()
