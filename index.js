@@ -129,7 +129,7 @@ client.on("messageCreate", async message => {
 
                     user.score += 1
                     await user.save();
-                    message.reply(`**You moved north. You are now in zone: ${user.score}**`);
+                    message.reply(`**You moved north (+1). You are now in zone: ${user.score}**`);
                     setTimeout(() => {
                         limits.delete(message.author.id + "north");
                     }, 5000)
@@ -150,7 +150,7 @@ client.on("messageCreate", async message => {
                     else {
                         user.score -= 1
                         await user.save();
-                        message.reply(`**You moved south. You are now in zone: ${user.score}**`);
+                        message.reply(`**You moved south (-1). You are now in zone: ${user.score}**`);
                     }
                     setTimeout(() => {
                         limits.delete(message.author.id + "south");
