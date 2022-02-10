@@ -5,6 +5,6 @@ module.exports = {
     guildID: "884489381510021152",
     announcements: "939872422709059655",
     time: 21600000, // HOURS * MINS * SECONDS * MSECONDS
-    targetNumber: 666, // TARGET NUMBERS
+    targetNumber: 555, // TARGET NUMBERS
     GameChannel: "940682846081806486" // GAME CHANNEL ID
 }
