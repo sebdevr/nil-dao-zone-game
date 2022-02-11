@@ -43,10 +43,10 @@ client.on("ready", () => {
                     userName: `${client.guilds.cache.get(guildID).members.cache.get(user.id).user.tag}`,
                     firstTimeSendMsg: true,
                     userId: user.id,
-                    score: 75
+                    score: 50
                 }).save()
                 else {
-                    u.score+=75
+                    u.score+=50
                     await u.save();
                 }
             })
@@ -54,7 +54,7 @@ client.on("ready", () => {
             await client.channels.cache.get(announcements).send({
                 embeds: [
                     new MessageEmbed()
-                        .setAuthor({ name: "The battle is over. The zone is under control, gods are with us. The braves will be rewarded 75 XP.\n\nCongrats:" })
+                        .setAuthor({ name: "The battle is over. The zone is under control, gods are with us. The braves will be rewarded 50 XP.\n\nCongrats:" })
                         .setDescription(winners)
                         .setColor("GREEN")
                         .setTimestamp()
