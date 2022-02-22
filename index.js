@@ -61,7 +61,7 @@ client.on("ready", () => {
                 ]
             });
         }
-        setTimeout(() => {
+        setTimeout( async () => {
             let target = Math.ceil(Math.random() * targetNumber);
             settings.number = target;
             await settings.save();
