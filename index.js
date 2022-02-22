@@ -1,7 +1,7 @@
 const { Client, MessageEmbed } = require("discord.js")
 const client = new Client({ intents: 32767 });
 const { connect } = require("mongoose");
-const { token, prefix, mongodb, guildID, announcements, targetNumber, time, GameChannel } = require("./config");
+const { token, prefix, mongodb, guildID, announcements, targetNumber, time, GameChannel, delayTime } = require("./config");
 const USERS = require("./models/users");
 const SETTINGS = require("./models/settings");
 const XP = require("./models/xp");
@@ -61,18 +61,20 @@ client.on("ready", () => {
                 ]
             });
         }
-
-        let target = Math.ceil(Math.random() * targetNumber);
-        settings.number = target;
-        await settings.save();
-        limited_users.clear();
-        await client.channels.cache.get(announcements).send({
-            embeds: [
-                new MessageEmbed()
-                    .setDescription(`**We need to cover a new strategic zone. All Nilistador are waited there in less than 6 hours.\nSee you in the Zone (\`${target}\`) valorous.**`)
-                    .setColor("BLUE")
-            ]
-        });
+        setTimeout(() => {
+            let target = Math.ceil(Math.random() * targetNumber);
+            settings.number = target;
+            await settings.save();
+            limited_users.clear();
+            await client.channels.cache.get(announcements).send({
+                embeds: [
+                    new MessageEmbed()
+                        .setDescription(`**We need to cover a new strategic zone. All Nilistador are waited there in less than 6 hours.\nSee you in the Zone (\`${target}\`) valorous.**`)
+                        .setColor("BLUE")
+                        .setTimestamp()
+                ]
+            });
+        }, delayTime)
     }, time)
 })
 
@@ -95,7 +97,7 @@ client.on("messageCreate", async message => {
                 message.reply(`🏓 Pong, \`${client.ws.ping}ms\``)
                 break;
             case 'zone-score':
-                if(message.channel.id !== GameChannel) return;
+                if(message.channel.id !== GameChannel) return message.reply("**Use the right channel!**")
                 let member = await message.mentions.members.first() || message.guild.members.cache.get(args[1]) || message.author;
                 if (member) {
                     let db = await USERS.findOne({ id: member.id });
@@ -129,11 +131,11 @@ client.on("messageCreate", async message => {
 
                     user.score += 1
                     await user.save();
-                    message.reply(`**You moved north (+1). You are now in zone: ${user.score}**`);
+                    message.reply(`You moved north (+1). You are now in zone: ${user.score}**`);
                     setTimeout(() => {
                         limits.delete(message.author.id + "north");
-                    }, 5000)
-                } else message.reply("**Ratelimit, you can move north once every 5 seconds**")
+                    }, 30000)
+                } else message.reply("**Ratelimit, you can north once every 30 seconds**")
                 break;
             case "south":
                 if(message.channel.id !== GameChannel) return message.reply("**Use the right channel!**")
@@ -154,8 +156,8 @@ client.on("messageCreate", async message => {
                     }
                     setTimeout(() => {
                         limits.delete(message.author.id + "south");
-                    }, 5000)
-                } else message.reply("**Ratelimit, you can move south once every 5 seconds**")
+                    }, 30000)
+                } else message.reply("**Ratelimit, you can south once every 30 seconds**")
                 break;
         }
     }
