@@ -134,7 +134,7 @@ client.on("messageCreate", async message => {
                     message.reply(`**You moved north (+1). You are now in zone: ${user.score}**`);
                     setTimeout(() => {
                         limits.delete(message.author.id + "north");
-                    }, 30000)
+                    }, 5000)
                 } else message.reply("**Ratelimit, you can north once every 30 seconds**")
                 break;
             case "south":
@@ -156,7 +156,7 @@ client.on("messageCreate", async message => {
                     }
                     setTimeout(() => {
                         limits.delete(message.author.id + "south");
-                    }, 30000)
+                    }, 5000)
                 } else message.reply("**Ratelimit, you can south once every 30 seconds**")
                 break;
         }
